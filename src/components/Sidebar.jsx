@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Home, Package, ClipboardList, FileText, Menu, X } from 'lucide-react';
 import logo from '../assets/khadim-backer.png';
 
 const Sidebar = () => {
-  const [isOpen, setIsOpen] = useState(true); // State to toggle sidebar visibility
+  const [isOpen, setIsOpen] = useState(true);
+  const location = useLocation(); // Get current location for active link
 
   // Handle responsive sidebar toggle
   useEffect(() => {
@@ -16,21 +17,16 @@ const Sidebar = () => {
       }
     };
 
-    // Initial check
     handleResize();
-
-    // Add event listener
     window.addEventListener('resize', handleResize);
-
-    // Cleanup on unmount
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   const menuItems = [
-    { name: 'Dashboard', icon: <Home className="w-5 h-5" />, path: '/' },
-    { name: 'Inventory', icon: <Package className="w-5 h-5" />, path: '/inventory' },
-    { name: 'Orders', icon: <ClipboardList className="w-5 h-5" />, path: '/orders' },
-    { name: 'Billing', icon: <FileText className="w-5 h-5" />, path: '/billing' },
+    { name: 'Dashboard', icon: Home, path: '/' },
+    { name: 'Inventory', icon: Package, path: '/inventory' },
+    { name: 'Orders', icon: ClipboardList, path: '/orders' },
+    { name: 'Billing', icon: FileText, path: '/billing' },
   ];
 
   const toggleSidebar = () => {
@@ -38,35 +34,40 @@ const Sidebar = () => {
   };
 
   return (
-    <div
-      className={`${
-        isOpen ? 'w-72' : 'w-20'
-      } h-full bg-bakery-background shadow-md transition-all duration-300`}
-    >
+    <div className={` h-full bg-white shadow-lg transition-all duration-300 ease-in-out 
+      ${isOpen ? 'w-64' : 'w-20'} z-50`}>
       {/* Sidebar Header */}
-      <div className="p-5 border-b bg-bakery-background text-black flex justify-between items-center">
-        <img
-          src={logo}
-          alt="Logo"
-          className={`w-[130px] transition-all ${isOpen ? 'block' : 'hidden'}`}
-        />
-
+      <div className="flex items-center justify-between p-4 border-b">
+        {isOpen && (
+          <img 
+            src={logo} 
+            alt="Company Logo" 
+            className="h-10 w-auto"
+          />
+        )}
+        
         {/* Hamburger Button for Mobile */}
-        <button onClick={toggleSidebar} className="lg:hidden text-black">
-          {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+        <button 
+          onClick={toggleSidebar} 
+          className="p-2 rounded-md hover:bg-gray-100"
+        >
+          {isOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
       </div>
 
       {/* Sidebar Navigation */}
-      <nav className="p-4">
+      <nav className="mt-4">
         {menuItems.map((item, index) => (
           <Link
             key={index}
             to={item.path}
-            className="flex items-center p-3 hover:bg-bakery-secondary hover:text-white rounded-lg transition-colors mb-2"
+            className={`flex items-center p-3 mx-2 rounded-md transition-colors duration-200 
+              ${location.pathname === item.path 
+                ? 'bg-bakery-secondary text-white' 
+                : 'hover:bg-gray-100 text-gray-700'}  hover:bg-bakery-secondary hover:text-white `}
           >
-            {item.icon}
-            <span className={`ml-3 ${isOpen ? 'block' : 'hidden'}`}>{item.name}</span>
+            <item.icon className="mr-3" size={20} />
+            {isOpen && <span>{item.name}</span>}
           </Link>
         ))}
       </nav>
