@@ -45,7 +45,7 @@ const Sidebar = () => {
       
       {/* Sidebar Header */}
       <div className="p-5 border-b bg-bakery-background text-black flex justify-between items-center">
-        <img src={logo} alt="Logo" className={`w-30 transition-all ${isOpen ? 'block' : 'hidden'}`} />
+        <img src={logo} alt="Logo" className={`w-[130px] transition-all ${isOpen ? 'block' : 'hidden'}`} />
         
         {/* Hamburger Button for Mobile */}
         <button 
