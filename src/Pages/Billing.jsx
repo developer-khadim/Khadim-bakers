@@ -18,7 +18,7 @@ const BillingPage = () => {
   // Calculate total, tax, and final total
   const calculateTotal = () => {
     const subtotal = cartItems.reduce((acc, item) => acc + item.quantity * item.price, 0);
-    const tax = subtotal * 0.1; // Assuming 10% tax
+    const tax = subtotal * 0.10; // Assuming 10% tax
     const total = subtotal + tax;
     return { subtotal, tax, total };
   };
@@ -59,8 +59,8 @@ const BillingPage = () => {
               <tr>
                 <td style="border: 1px solid #ddd; padding: 8px;">${item.name}</td>
                 <td style="border: 1px solid #ddd; padding: 8px;">${item.quantity}</td>
-                <td style="border: 1px solid #ddd; padding: 8px;">$${item.price}</td>
-                <td style="border: 1px solid #ddd; padding: 8px;">$${item.quantity * item.price}</td>
+                <td style="border: 1px solid #ddd; padding: 8px;">PKR ${item.price}</td>
+                <td style="border: 1px solid #ddd; padding: 8px;">PKR ${item.quantity * item.price}</td>
               </tr>`
               )
               .join('')}
@@ -69,9 +69,9 @@ const BillingPage = () => {
 
         <h3>Summary:</h3>
         <div>
-          <p>Subtotal: $${subtotal}</p>
-          <p>Tax (10%): $${tax}</p>
-          <p><strong>Total: $${total}</strong></p>
+          <p>Subtotal: PKR ${subtotal}</p>
+          <p>Tax (10%): PKR ${tax}</p>
+          <p><strong>Total: PKR ${total}</strong></p>
         </div>
       </div>
     `;
@@ -135,8 +135,8 @@ const BillingPage = () => {
               <tr key={item.id}>
                 <td className="py-2 px-4 border border-gray-300">{item.name}</td>
                 <td className="py-2 px-4 border border-gray-300">{item.quantity}</td>
-                <td className="py-2 px-4 border border-gray-300">${item.price}</td>
-                <td className="py-2 px-4 border border-gray-300">${item.quantity * item.price}</td>
+                <td className="py-2 px-4 border border-gray-300">PKR {item.price}</td>
+                <td className="py-2 px-4 border border-gray-300">PKR {item.quantity * item.price}</td>
               </tr>
             ))}
           </tbody>
@@ -149,15 +149,15 @@ const BillingPage = () => {
         <div className="space-y-2">
           <div className="flex justify-between">
             <span>Subtotal:</span>
-            <span>${calculateTotal().subtotal}</span>
+            <span>PKR {calculateTotal().subtotal}</span>
           </div>
           <div className="flex justify-between">
-            <span>Tax (10%):</span>
-            <span>${calculateTotal().tax}</span>
+            <span>Tax (10%)</span>
+            <span>PKR {calculateTotal().tax}</span>
           </div>
           <div className="flex justify-between font-semibold">
             <span>Total:</span>
-            <span>${calculateTotal().total}</span>
+            <span>PKR {calculateTotal().total}</span>
           </div>
         </div>
       </div>
